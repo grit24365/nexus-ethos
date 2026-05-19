@@ -7,16 +7,14 @@ import re
 # Configuration
 POSTS_DIR = "content/posts"
 CATEGORIES = {
-    "trends": "최신 AI 기술 동향과 미래 전망",
-    "opportunity": "AI 시대 위기와 새로운 기회",
-    "insight": "4060 세대의 무기로 AI 시대 살아남기 위한 통찰"
+    "trends": "AI 기술 동향",
+    "opportunity": "AI 시대의 새로운 지평",
+    "insight": "에토스의 지혜와 성찰"
 }
 
 def run_gemini(prompt):
     """Calls the Gemini CLI to process a prompt."""
     try:
-        # We use 'gemini-cli ask' as the command
-        # In a real environment, you might need the full path or environment setup
         result = subprocess.run(
             ["gemini-cli", "ask", prompt],
             capture_output=True,
@@ -36,10 +34,10 @@ def clean_json(text):
     return text
 
 def generate_full_post():
-    print("--- Phase 1: Topic Selection ---")
+    print("--- Phase 1: Topic Selection (Practical focus) ---")
     topic_prompt = f"""
     당신은 '넥서스 에토스(Nexus Ethos)'의 편집장 '넥토스(Nexthos)'입니다. 
-    40~60대 독자를 타겟으로, 인공지능 기술이 그들의 경제적 생존과 삶의 질에 미치는 영향에 대한 '깊이 있고 진지한' 포스팅 주제를 선정하세요.
+    숙련된 지혜의 세대를 위해, 단순한 이론이 아닌 '당장 오늘부터 적용 가능한' 구체적이고 실제적인 AI 활용/경제 주제를 선정하세요.
     
     카테고리 옵션:
     - trends: {CATEGORIES['trends']}
@@ -47,7 +45,7 @@ def generate_full_post():
     - insight: {CATEGORIES['insight']}
     
     응답은 반드시 아래 JSON 형식으로만 해주세요:
-    {{"category": "trends/opportunity/insight 중 하나", "title": "제목", "key_points": ["요점1", "요점2", "요점3"]}}
+    {{"category": "trends/opportunity/insight 중 하나", "title": "구체적인 제목", "key_points": ["실천방안1", "실천방안2", "실천방안3"], "img_keyword": "unsplash_keyword"}}
     """
     
     raw_topic = run_gemini(topic_prompt)
@@ -56,57 +54,49 @@ def generate_full_post():
     topic_data = json.loads(clean_json(raw_topic))
     category = topic_data['category']
     title = topic_data['title']
-    img_keyword = topic_data.get('img_keyword', 'technology')
     
     print(f"Selected Topic: {title} ({category})")
     
-    # Simple Unsplash image integration
-    cover_image = f"https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=1200&auto=format&fit=crop" # Default
-    # In a real setup, we could use an API to fetch a specific image for the keyword
-    
-    print("--- Phase 2: Content Generation ---")
+    print("--- Phase 2: Content Generation (Human-like tone & +20% Length) ---")
     content_prompt = f"""
     당신은 '넥서스 에토스(Nexus Ethos)'의 편집장 '넥토스(Nexthos)'입니다. 
-    40~60대 독자를 위해 아래 주제로 심층적인 칼럼을 작성하세요.
-    
+    아래 주제로 심층적인 칼럼을 작성하세요.
+
     주제: {title}
     요점: {", ".join(topic_data['key_points'])}
     
-    작성 가이드라인:
-    1. 말투: 진지하고, 지적이며, 품격 있는 문체 (경어체).
-    2. 타겟: 40~60대 (은퇴 설계, 자산 보호, 커리어 전환에 민감함).
-    3. 구조: 도입부 - 본문(3개 섹션 이상) - 결론(성찰과 제언).
-    4. 분량: 한글 기준 1500자 내외의 깊이 있는 내용.
-    5. SEO: 제목에 핵심 키워드 포함, 도입부에 주제 요약 포함.
-    
-    출력 형식:
-    - 서론(Excerpt)을 먼저 작성하고, 그 뒤에 본문을 작성하세요.
-    - Markdown 형식을 사용하세요 (## 헤더 등).
+    [필수 작성 가이드라인 - '인간적인 필체' 구현]
+    1. 말투: AI 특유의 딱딱한 나열식이 아닌, 노련한 칼럼니스트가 대화하듯 풀어내는 '휴먼 톤'을 사용하세요.
+    2. 문장 구조: "~입니다", "~합니다"만 반복하지 말고, 의문문, 감탄문, 비유법을 적절히 섞어 문장의 리듬감을 살리세요.
+    3. 실질적 도움: 관념적인 이야기보다 구체적인 도구 이름, 웹사이트, 실천 수칙 등 '실질적인 정보'를 본문의 50% 이상 채우세요.
+    4. 분량 확대: 기존보다 20% 더 길게 작성하세요 (한글 기준 공백 포함 2,000자 내외). 
+    5. 서사 부여: 도입부에서 독자의 상황(예: "어느 날 아침 신문을 보며 느꼈던 생소함...")에 공감하는 서사를 먼저 던지세요.
+    6. 금기: '4060 세대', '중장년층'이라는 단어를 절대 쓰지 마세요. 대신 '사회의 중추', '지혜의 목소리' 등으로 표현하세요.
+
+    출력 형식: Markdown (## 헤더 사용)
     """
     
     content = run_gemini(content_prompt)
     if not content: return
     
-    # Save to file
+    cover_image = f"https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=1200&auto=format&fit=crop" # Default for test
+    
     today = datetime.datetime.now().strftime("%Y-%m-%d")
     slug = re.sub(r'[^a-z0-9]', '-', title.lower()).strip('-')[:50]
     filename = f"{today}-{slug}.md"
     filepath = os.path.join(POSTS_DIR, filename)
-    
-    # Split content into excerpt and main body (assuming AI follows instructions)
-    # If not, we can do some basic parsing.
     
     with open(filepath, "w", encoding="utf-8") as f:
         f.write("---\n")
         f.write(f"title: \"{title}\"\n")
         f.write(f"date: \"{today}\"\n")
         f.write(f"category: \"{category}\"\n")
-        f.write(f"excerpt: \"{topic_data['key_points'][0]}...\"\n") # Simplified
+        f.write(f"excerpt: \"{topic_data['key_points'][0]}...\"\n")
         f.write(f"coverImage: \"{cover_image}\"\n")
         f.write("---\n\n")
         f.write(content)
     
-    print(f"Successfully generated post: {filepath}")
+    print(f"Successfully generated human-like post: {filepath}")
 
 if __name__ == "__main__":
     if not os.path.exists(POSTS_DIR):
