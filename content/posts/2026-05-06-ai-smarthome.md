@@ -3,7 +3,7 @@ title: "스마트 홈의 진화: AI가 빚어내는 안락하고 안전한 노�
 date: "2026-05-06"
 category: "trends"
 excerpt: "집은 이제 단순한 거주 공간을 넘어, 우리의 건강을 체크하고 일상을 보조하는 지능형 동반자로 진화하고 있습니다."
-coverImage: "https://images.unsplash.com/photo-1558002038-1055907df8d7?q=80&w=1200&auto=format&fit=crop"
+coverImage: "https://images.unsplash.com/photo-1585314062340-f1a5a7c9328d?q=80&w=1200&auto=format&fit=crop"
 ---
 
 우리가 가장 긴 시간을 보내는 '집'이 AI를 만나면 어떤 변화가 생길까요? 특히 신체적 능력이 조금씩 저하되는 60대 이후의 세대에게 스마트 홈 기술은 독립적이고 존엄한 삶을 유지하게 해주는 결정적인 요소가 됩니다.
