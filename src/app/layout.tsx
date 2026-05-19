@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 
 const inter = Inter({
@@ -22,8 +23,40 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
+  const ADSENSE_ID = process.env.NEXT_PUBLIC_ADSENSE_ID;
+
   return (
     <html lang="ko" className={`${inter.variable} ${playfair.variable}`}>
+      <head>
+        {/* Google AdSense */}
+        {ADSENSE_ID && (
+          <Script
+            async
+            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_ID}`}
+            crossOrigin="anonymous"
+            strategy="afterInteractive"
+          />
+        )}
+        
+        {/* Google Analytics (GA4) */}
+        {GA_ID && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+              strategy="afterInteractive"
+            />
+            <Script id="google-analytics" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.parent.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${GA_ID}');
+              `}
+            </Script>
+          </>
+        )}
+      </head>
       <body className="antialiased bg-[#f8f9fa] text-[#1a1a1a]">
         <div className="min-h-screen flex flex-col pb-20 md:pb-0">
           <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200">
