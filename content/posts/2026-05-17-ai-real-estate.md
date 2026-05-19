@@ -1,6 +1,6 @@
 ---
 title: "AI와 부동산의 미래: 알고리즘이 지배하는 시장에서 살아남는 법"
-date: "2024-05-17"
+date: "2026-05-17"
 category: "opportunity"
 excerpt: "부동산은 더 이상 단순한 입지론에 머물지 않습니다. AI 기반 가치 분석과 인구 구조 변화가 맞물리는 지금, 4060 세대의 자산 포트폴리오는 재정의되어야 합니다."
 coverImage: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=1200&auto=format&fit=crop"

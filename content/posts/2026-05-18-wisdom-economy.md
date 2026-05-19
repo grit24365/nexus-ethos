@@ -1,6 +1,6 @@
 ---
 title: "AI 시대의 실직 공포를 넘어서: 4060이 가진 '숙련된 지혜'의 경제적 가치"
-date: "2024-05-18"
+date: "2026-05-18"
 category: "insight"
 excerpt: "단순한 기술적 숙련도는 AI에게 밀릴 수 있지만, 복잡한 이해관계를 조정하고 인간적인 신뢰를 쌓는 능력은 더욱 희소해지고 있습니다. 우리의 경험이 어떻게 수익이 되는지 분석합니다."
 coverImage: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?q=80&w=1200&auto=format&fit=crop"

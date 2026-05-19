@@ -1,6 +1,6 @@
 ---
 title: "AI와 리더십의 재정의: 명령하는 관리자에서 질문하는 코치로"
-date: "2024-05-12"
+date: "2026-05-12"
 category: "insight"
 excerpt: "조직 내 4060 리더들의 역할이 근본적으로 바뀌고 있습니다. AI가 정답을 내놓는 시대, 리더에게 필요한 것은 정답이 아닌 '가장 날카로운 질문'입니다."
 coverImage: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=1200&auto=format&fit=crop"

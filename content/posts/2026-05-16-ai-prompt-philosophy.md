@@ -1,6 +1,6 @@
 ---
 title: "4060을 위한 AI 프롬프트 엔지니어링: 명령어가 아닌 '철학적 대화'"
-date: "2024-05-16"
+date: "2026-05-16"
 category: "insight"
 excerpt: "젊은 세대가 기술적 기교에 집중할 때, 우리는 '질문의 본질'에 집중해야 합니다. AI와 대화하는 법은 코딩이 아니라 인문학적 소양에서 나옵니다."
 coverImage: "https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=1200&auto=format&fit=crop"

@@ -1,6 +1,6 @@
 ---
 title: "글로벌 공급망과 AI: 세계 경제의 판도가 바뀌는 지점"
-date: "2024-05-10"
+date: "2026-05-10"
 category: "trends"
 excerpt: "AI는 단순히 소프트웨어의 발전이 아닙니다. 전 세계 물류와 제조의 지도를 다시 그리며 우리 자산의 가치에 직접적인 영향을 미치고 있습니다."
 coverImage: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=1200&auto=format&fit=crop"

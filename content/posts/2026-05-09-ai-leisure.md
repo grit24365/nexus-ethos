@@ -1,6 +1,6 @@
 ---
 title: "AI 시대의 여가와 은퇴: '노는 법'도 지능이 필요합니다"
-date: "2024-05-09"
+date: "2026-05-09"
 category: "insight"
 excerpt: "노동의 가치가 변하는 시대, 우리는 은퇴 후의 긴 시간을 어떻게 채워야 할까요? AI가 선사하는 풍요로운 여가와 자아실현의 새로운 기회를 탐구합니다."
 coverImage: "https://images.unsplash.com/photo-1502444330042-d1a1ddf9bb5b?q=80&w=1200&auto=format&fit=crop"

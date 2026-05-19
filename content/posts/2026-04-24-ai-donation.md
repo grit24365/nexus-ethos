@@ -1,6 +1,6 @@
 ---
 title: "AI와 기부 문화: 투명하고 효율적인 나눔의 새로운 지평"
-date: "2024-04-24"
+date: "2026-04-24"
 category: "insight"
 excerpt: "성공한 4060 세대에게 나눔은 인생의 완성입니다. AI 기술이 어떻게 여러분의 선의를 가장 가치 있는 곳에 전달하는지 살펴봅니다."
 coverImage: "https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?q=80&w=1200&auto=format&fit=crop"

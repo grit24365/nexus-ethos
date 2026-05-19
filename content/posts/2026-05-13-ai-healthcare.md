@@ -1,6 +1,6 @@
 ---
 title: "헬스케어 혁명: AI가 60대의 삶을 어떻게 20년 연장하는가"
-date: "2024-05-13"
+date: "2026-05-13"
 category: "trends"
 excerpt: "질병을 치료하는 시대를 넘어, 예측하고 예방하는 시대가 열리고 있습니다. 개인 맞춤형 AI 의료 서비스가 선사할 새로운 장수의 지평을 탐구합니다."
 coverImage: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=1200&auto=format&fit=crop"

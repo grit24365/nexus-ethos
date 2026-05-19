@@ -1,6 +1,6 @@
 ---
 title: "AI 시대의 유산 상속: 디지털 자산과 데이터 유언장"
-date: "2024-05-01"
+date: "2026-05-01"
 category: "opportunity"
 excerpt: "죽음 이후에도 우리의 지혜와 자산은 어떻게 남겨질까요? AI가 관리하는 새로운 방식의 유산 상속과 디지털 영생에 대해 고찰합니다."
 coverImage: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=1200&auto=format&fit=crop"

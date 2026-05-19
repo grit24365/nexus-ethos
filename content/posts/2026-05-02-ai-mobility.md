@@ -1,6 +1,6 @@
 ---
 title: "미래의 교통과 이동성: AI 자율주행이 선사하는 60대의 자유"
-date: "2024-05-02"
+date: "2026-05-02"
 category: "trends"
 excerpt: "운전면허 반납을 고민할 필요가 없는 시대가 오고 있습니다. 자율주행 기술이 어떻게 4060 세대의 이동권을 보장하고 삶의 반경을 넓히는지 살펴봅니다."
 coverImage: "https://images.unsplash.com/photo-1554672408-730436b60dde?q=80&w=1200&auto=format&fit=crop"

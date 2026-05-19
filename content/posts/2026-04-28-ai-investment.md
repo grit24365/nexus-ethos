@@ -1,6 +1,6 @@
 ---
 title: "AI와 지속 가능한 투자: ESG를 넘어 '지능형 책임'의 시대로"
-date: "2024-04-28"
+date: "2026-04-28"
 category: "opportunity"
 excerpt: "단순한 수익률을 넘어 미래 세대를 위한 가치 투자가 주목받고 있습니다. AI가 선별한 진정한 지속 가능 기업을 찾는 혜안을 나눕니다."
 coverImage: "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?q=80&w=1200&auto=format&fit=crop"

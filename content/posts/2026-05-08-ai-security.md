@@ -1,6 +1,6 @@
 ---
 title: "AI와 보안의 심리학: 4060 세대를 겨냥한 디지털 범죄에 대처하는 법"
-date: "2024-05-08"
+date: "2026-05-08"
 category: "trends"
 excerpt: "기술이 정교해질수록 사기 수법도 지능화됩니다. 딥페이크와 AI 보이스 피싱으로부터 당신의 자산과 가족을 지키는 최첨단 방어 전략을 공개합니다."
 coverImage: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1200&auto=format&fit=crop"

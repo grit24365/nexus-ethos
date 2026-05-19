@@ -1,6 +1,6 @@
 ---
 title: "AI와 도시 재생: 쇠락하는 동네를 살리는 지능형 마법"
-date: "2024-04-27"
+date: "2026-04-27"
 category: "trends"
 excerpt: "죽어가는 상권과 낡은 주거지가 AI 기술을 통해 어떻게 새로운 생명력을 얻고 있을까요? 로컬 비즈니스의 새로운 기회를 포착합니다."
 coverImage: "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?q=80&w=1200&auto=format&fit=crop"

@@ -1,6 +1,6 @@
 ---
 title: "스마트 홈의 진화: AI가 빚어내는 안락하고 안전한 노후 공간"
-date: "2024-05-06"
+date: "2026-05-06"
 category: "trends"
 excerpt: "집은 이제 단순한 거주 공간을 넘어, 우리의 건강을 체크하고 일상을 보조하는 지능형 동반자로 진화하고 있습니다."
 coverImage: "https://images.unsplash.com/photo-1558002038-1055907df8d7?q=80&w=1200&auto=format&fit=crop"

@@ -6,6 +6,7 @@ import SmartImage from "@/components/SmartImage";
 
 export default function Home() {
   const allPosts = getSortedPostsData();
+  // allPosts is already sorted by getSortedPostsData descending (newest first)
   const featuredPost = allPosts[0];
   const remainingPosts = allPosts.slice(1);
 

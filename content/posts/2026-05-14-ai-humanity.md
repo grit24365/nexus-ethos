@@ -1,6 +1,6 @@
 ---
 title: "AI 시대의 인간성: 기술이 고도화될수록 빛나는 '에토스'의 가치"
-date: "2024-05-14"
+date: "2026-05-14"
 category: "insight"
 excerpt: "모든 것이 자동화되는 세상에서 인간만이 가진 고유한 가치는 무엇일까요? 기술의 홍수 속에서 우리가 지켜야 할 품격과 정신적 유산에 대해 고찰합니다."
 coverImage: "https://images.unsplash.com/photo-1499750310107-5fef28a66643?q=80&w=1200&auto=format&fit=crop"

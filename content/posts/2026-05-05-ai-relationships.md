@@ -1,6 +1,6 @@
 ---
 title: "AI 시대의 인간 관계: 디지털 연결 속에서 깊어지는 아날로그의 우정"
-date: "2024-05-05"
+date: "2026-05-05"
 category: "insight"
 excerpt: "소셜 미디어가 우리를 연결하지만, 때로 더 고독하게 만들기도 합니다. AI 시대에 진정한 인간 관계를 맺고 유지하는 지혜를 나눕니다."
 coverImage: "https://images.unsplash.com/photo-1511632765486-a01980e01a18?q=80&w=1200&auto=format&fit=crop"

@@ -1,6 +1,6 @@
 ---
 title: "AI와 언어의 장벽: 실시간 번역이 가져올 4060의 글로벌 노마드 삶"
-date: "2024-04-29"
+date: "2026-04-29"
 category: "trends"
 excerpt: "외국어 공부에 대한 압박에서 벗어나십시오. AI가 실시간으로 소통을 돕는 시대, 전 세계를 무대로 제2의 인생을 설계하는 법을 공개합니다."
 coverImage: "https://images.unsplash.com/photo-1452421822248-d4c2b47f0c81?q=80&w=1200&auto=format&fit=crop"

@@ -1,6 +1,6 @@
 ---
 title: "AI와 패션의 진화: 60세에 가장 멋있어지는 법"
-date: "2024-04-21"
+date: "2026-04-21"
 category: "trends"
 excerpt: "나이 듦은 스타일의 완성입니다. AI 기반의 체형 분석과 스타일 큐레이션이 어떻게 당신의 중후한 멋을 극대화하는지 공개합니다."
 coverImage: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=1200&auto=format&fit=crop"

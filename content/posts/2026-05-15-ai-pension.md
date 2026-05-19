@@ -1,6 +1,6 @@
 ---
 title: "AI와 연금의 미래: 노후 자산을 지키는 지능형 전략"
-date: "2024-05-15"
+date: "2026-05-15"
 category: "opportunity"
 excerpt: "전통적인 연금 운용 방식이 한계에 부딪히고 있습니다. AI 기반의 동적 자산 배분이 어떻게 4060 세대의 노후를 더 견고하게 만들 수 있는지 분석합니다."
 coverImage: "https://images.unsplash.com/photo-1579532537598-459ecdaf39cc?q=80&w=1200&auto=format&fit=crop"

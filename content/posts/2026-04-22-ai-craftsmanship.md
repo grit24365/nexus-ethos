@@ -1,6 +1,6 @@
 ---
 title: "AI 시대의 장인 정신: 기술이 대체할 수 없는 4060의 한 끗 차이"
-date: "2024-04-22"
+date: "2026-04-22"
 category: "insight"
 excerpt: "대량 생산의 시대, AI의 완벽함이 흔해질수록 인간의 '손맛'과 '정성'은 명품이 됩니다. 우리가 지켜야 할 장인 정신의 경제적 가치를 분석합니다."
 coverImage: "https://images.unsplash.com/photo-1459749411177-042180ca6738?q=80&w=1200&auto=format&fit=crop"

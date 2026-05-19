@@ -1,6 +1,6 @@
 ---
 title: "AI와 취업 시장의 역설: 경력직 4060을 찾는 기업들이 늘어나는 이유"
-date: "2024-04-30"
+date: "2026-04-30"
 category: "opportunity"
 excerpt: "기술이 모든 것을 대체할 것 같지만, 현장에서는 오히려 AI가 줄 수 없는 '노련함'에 목말라하고 있습니다. 재취업 시장의 새로운 기류를 분석합니다."
 coverImage: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=1200&auto=format&fit=crop"

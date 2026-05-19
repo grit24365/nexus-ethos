@@ -1,6 +1,6 @@
 ---
 title: "AI와 명상의 시간: 지능형 평온이 선사하는 마음의 휴식"
-date: "2024-04-23"
+date: "2026-04-23"
 category: "insight"
 excerpt: "복잡한 생각으로 가득 찬 4060의 머릿속을 AI가 비워줍니다. 최첨단 뇌과학과 AI가 결합된 새로운 명상의 세계로 안내합니다."
 coverImage: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=1200&auto=format&fit=crop"

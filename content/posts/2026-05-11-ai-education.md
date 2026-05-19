@@ -1,6 +1,6 @@
 ---
 title: "교육의 대전환: AI 시대, 우리 자녀와 손주들에게 무엇을 가르칠 것인가"
-date: "2024-05-11"
+date: "2026-05-11"
 category: "trends"
 excerpt: "암기 위주의 교육은 끝났습니다. AI와 공존해야 할 다음 세대에게 가장 필요한 핵심 역량은 비판적 사고와 인간다움에 대한 깊은 이해입니다."
 coverImage: "https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?q=80&w=1200&auto=format&fit=crop"
