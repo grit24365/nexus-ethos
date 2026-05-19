@@ -14,8 +14,8 @@ export default async function CategoryPage({ params }: Props) {
 
   const categoryNames: Record<string, string> = {
     trends: "AI 기술 동향",
-    opportunity: "위기와 기회",
-    insight: "4060 통찰"
+    opportunity: "AI 시대의 새로운 지평",
+    insight: "에토스의 지혜와 성찰"
   };
 
   return (
