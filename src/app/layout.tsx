@@ -25,7 +25,7 @@ export default function RootLayout({
   return (
     <html lang="ko" className={`${inter.variable} ${playfair.variable}`}>
       <body className="antialiased bg-[#f8f9fa] text-[#1a1a1a]">
-        <div className="min-h-screen flex flex-col">
+        <div className="min-h-screen flex flex-col pb-20 md:pb-0">
           <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200">
             <div className="max-w-6xl mx-auto px-6 h-20 flex justify-between items-center">
               <div className="flex flex-col">
@@ -49,24 +49,24 @@ export default function RootLayout({
           </main>
           
           <footer className="bg-[#1a1a1a] text-white py-16 px-6">
-            <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12">
+            <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 text-center md:text-left">
               <div className="space-y-4">
-                <h2 className="text-2xl font-serif font-bold">NEXUS ETHOS</h2>
+                <h2 className="text-2xl font-serif font-bold text-white">NEXUS ETHOS</h2>
                 <p className="text-gray-400 text-sm leading-relaxed">
                   Connecting Data, Wisdom, and Generations. 우리는 기술의 진보 속에서 인간다운 가치를 찾아냅니다.
                 </p>
               </div>
               <div className="space-y-4">
                 <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-gray-500">Categories</h3>
-                <ul className="space-y-2 text-sm text-gray-400">
+                <ul className="space-y-2 text-sm text-gray-400 font-medium">
                   <li><a href="/category/trends" className="hover:text-white transition">AI 기술 동향</a></li>
                   <li><a href="/category/opportunity" className="hover:text-white transition">AI 시대의 새로운 지평</a></li>
                   <li><a href="/category/insight" className="hover:text-white transition">에토스의 지혜와 성찰</a></li>
                 </ul>
               </div>
               <div className="space-y-4">
-                <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-gray-500">Legal & About</h3>
-                <ul className="space-y-2 text-sm text-gray-400">
+                <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-gray-500">Legal & Support</h3>
+                <ul className="space-y-2 text-sm text-gray-400 font-medium">
                   <li><a href="/about" className="hover:text-white transition">About Us</a></li>
                   <li><a href="/contact" className="hover:text-white transition">Contact Us</a></li>
                   <li><a href="/privacy" className="hover:text-white transition">Privacy Policy</a></li>
@@ -77,6 +77,11 @@ export default function RootLayout({
               © {new Date().getFullYear()} Nexus Ethos. All rights reserved.
             </div>
           </footer>
+
+          {/* Sticky Mobile Anchor Ad Placeholder */}
+          <div className="fixed bottom-0 left-0 right-0 h-16 md:hidden bg-gray-50 border-t border-gray-200 z-[60] flex items-center justify-center text-[10px] font-black tracking-[0.3em] text-gray-300 uppercase overflow-hidden">
+            Mobile Bottom Anchor Placement
+          </div>
         </div>
       </body>
     </html>

@@ -41,7 +41,6 @@ export default async function PostPage({ params }: Props) {
           {post.title}
         </h1>
         
-        {/* Featured Image using Client Component for error handling */}
         <div className="relative aspect-[21/9] w-full overflow-hidden rounded-3xl shadow-2xl">
           <SmartImage 
             src={post.coverImage || defaultImage} 
@@ -56,16 +55,30 @@ export default async function PostPage({ params }: Props) {
         </div>
       </header>
 
-      {/* Intro/Excerpt */}
+      {/* Ad Slot: Above the Fold (ATF) */}
+      <div className="max-w-3xl mx-auto w-full h-[100px] md:h-[250px] bg-gray-50 border border-dashed border-gray-200 rounded-xl flex items-center justify-center text-gray-300 text-xs tracking-widest uppercase mb-12 overflow-hidden">
+        Premium Leaderboard Placement
+      </div>
+
       <div className="max-w-3xl mx-auto bg-white p-10 rounded-2xl border border-gray-100 shadow-sm italic text-xl text-gray-700 leading-relaxed">
         {post.excerpt}
       </div>
 
-      {/* Main Content */}
+      {/* Main Content with Ad Injector Strategy */}
       <div className="max-w-3xl mx-auto prose prose-xl prose-serif prose-headings:font-serif prose-headings:font-bold prose-p:leading-relaxed prose-li:mb-2 prose-img:rounded-2xl">
         <ReactMarkdown remarkPlugins={[remarkGfm]}>
           {post.content}
         </ReactMarkdown>
+      </div>
+
+      {/* Ad Slot: In-Content (Bottom of Article) */}
+      <div className="max-w-3xl mx-auto mt-24 py-16 border-y border-gray-100 flex flex-col items-center space-y-6">
+        <p className="text-xs text-gray-400 uppercase tracking-[0.3em] font-bold">Recommended for You</p>
+        <div className="w-full h-64 bg-gray-50 flex flex-col items-center justify-center border border-dashed border-gray-200 rounded-3xl group hover:bg-white transition-colors cursor-pointer">
+          <span className="text-gray-300 text-sm font-bold tracking-widest uppercase text-center px-6 leading-relaxed">
+            AI-Driven Strategic Recommendations<br/>(AdSense Matched Content)
+          </span>
+        </div>
       </div>
 
       <footer className="max-w-3xl mx-auto pt-12 pb-24">
