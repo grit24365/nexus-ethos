@@ -14,7 +14,7 @@ const playfair = Playfair_Display({
 
 export const metadata: Metadata = {
   title: "넥서스 에토스 (Nexus Ethos) | AI 시대의 지혜와 성찰",
-  description: "데이터와 세대를 연결하는 통찰. 4060 세대를 위한 고품격 AI 트렌드 및 생존 전략 매거진.",
+  description: "데이터와 세대를 연결하는 통찰. 숙련된 세대를 위한 고품격 AI 트렌드 및 생존 전략 매거진.",
 };
 
 export default function RootLayout({
@@ -35,8 +35,8 @@ export default function RootLayout({
               </div>
               <nav className="hidden md:flex space-x-10 text-sm font-bold uppercase tracking-widest text-gray-500">
                 <a href="/category/trends" className="hover:text-black transition py-2 border-b-2 border-transparent hover:border-black">Trends</a>
-                <a href="/category/opportunity" className="hover:text-black transition py-2 border-b-2 border-transparent hover:border-black">Opportunity</a>
-                <a href="/category/insight" className="hover:text-black transition py-2 border-b-2 border-transparent hover:border-black">Insight</a>
+                <a href="/category/opportunity" className="hover:text-black transition py-2 border-b-2 border-transparent hover:border-black">New Horizons</a>
+                <a href="/category/insight" className="hover:text-black transition py-2 border-b-2 border-transparent hover:border-black">The Wisdom</a>
               </nav>
               <button className="md:hidden p-2">
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
@@ -59,9 +59,9 @@ export default function RootLayout({
               <div className="space-y-4">
                 <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-gray-500">Categories</h3>
                 <ul className="space-y-2 text-sm text-gray-400">
-                  <li><a href="#" className="hover:text-white transition">AI 기술 동향</a></li>
-                  <li><a href="#" className="hover:text-white transition">위기와 기회</a></li>
-                  <li><a href="#" className="hover:text-white transition">4060 통찰</a></li>
+                  <li><a href="/category/trends" className="hover:text-white transition">AI 기술 동향</a></li>
+                  <li><a href="/category/opportunity" className="hover:text-white transition">AI 시대의 새로운 지평</a></li>
+                  <li><a href="/category/insight" className="hover:text-white transition">에토스의 지혜와 성찰</a></li>
                 </ul>
               </div>
               <div className="space-y-4">
