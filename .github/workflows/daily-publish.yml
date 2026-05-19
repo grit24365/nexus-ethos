@@ -1,0 +1,38 @@
+name: Daily Content Publish
+
+on:
+  schedule:
+    - cron: '0 19 * * *' # 매일 한국 시간 새벽 4시 (UTC 19:00)
+  workflow_dispatch: # 수동 실행 가능
+
+jobs:
+  generate-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: |
+          # gemini-cli 설치 및 필요한 라이브러리 설치 로직
+          pip install google-generativeai # 또는 gemini-cli가 npm 패키지라면 npm install
+
+      - name: Generate Post
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: python scripts/generate_post.py
+
+      - name: Commit and Push
+        run: |
+          git config --global user.name "Nexthos (AI Bot)"
+          git config --global user.email "bot@nexus-ethos.com"
+          git add content/posts/*.md
+          git commit -m "Auto-generate daily insight: $(date +'%Y-%m-%d')"
+          git push
