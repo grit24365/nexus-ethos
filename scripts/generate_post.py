@@ -138,10 +138,15 @@ def generate_full_post():
     import random
     cover_image = f"https://images.unsplash.com/{random.choice(img_ids)}?q=80&w=1200&auto=format&fit=crop"
     
-    today = datetime.datetime.now().strftime("%Y-%m-%d")
-    slug = re.sub(r'[^a-zA-Z0-9가-힣]', '-', title.lower()).strip('-')[:50]
-    filename = f"{today}-{slug}.md"
-    filepath = os.path.join(POSTS_DIR, filename)
+    # Robust slug generation: Use timestamp + small random string for safe filenames
+    import time
+    import string
+    timestamp = datetime.datetime.now().strftime("%H%M%S")
+    random_str = ''.join(random.choices(string.ascii_lowercase + string.digits, k=4))
+    
+    # We'll use the category and a simple ID for the filename to be 100% safe
+    safe_slug = f"{category}-{timestamp}-{random_str}"
+    filepath = os.path.join(POSTS_DIR, f"{today}-{safe_slug}.md")
     
     with open(filepath, "w", encoding="utf-8") as f:
         f.write("---\n")
