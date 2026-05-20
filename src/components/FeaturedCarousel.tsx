@@ -70,7 +70,7 @@ export default function FeaturedCarousel({ posts }: FeaturedCarouselProps) {
             <div key={`${post.slug}-${idx}`} className="w-full flex-shrink-0">
               <Link href={`/blog/${post.slug}`} className="grid md:grid-cols-2 gap-0 items-stretch">
                 {/* Image Section */}
-                <div className="relative h-72 md:h-[550px] bg-gray-900 overflow-hidden">
+                <div className="relative h-64 md:h-[420px] bg-gray-900 overflow-hidden">
                   <SmartImage 
                     src={post.coverImage || "https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=1200&auto=format&fit=crop"} 
                     alt={post.title}
@@ -80,28 +80,28 @@ export default function FeaturedCarousel({ posts }: FeaturedCarouselProps) {
                 </div>
 
                 {/* Content Section */}
-                <div className="p-10 md:p-20 flex flex-col justify-center space-y-8 bg-white relative z-10">
-                  <div className="space-y-4">
-                    <div className="flex items-center space-x-3 text-[10px] font-black uppercase tracking-[0.4em] text-blue-600">
+                <div className="p-8 md:p-14 flex flex-col justify-center space-y-6 bg-white relative z-10">
+                  <div className="space-y-3">
+                    <div className="flex items-center space-x-3 text-[9px] font-black uppercase tracking-[0.4em] text-blue-600">
                       <span>Featured Insight</span>
-                      <span className="w-12 h-[2px] bg-blue-600/20" />
+                      <span className="w-10 h-[1.5px] bg-blue-600/20" />
                     </div>
-                    <h2 className="text-3xl md:text-5xl font-serif font-bold leading-[1.15] tracking-tight text-gray-900 group-hover:text-blue-900 transition-colors">
+                    <h2 className="text-2xl md:text-4xl font-serif font-bold leading-[1.2] tracking-tight text-gray-900 group-hover:text-blue-900 transition-colors line-clamp-2 md:line-clamp-3">
                       {post.title}
                     </h2>
                   </div>
                   
-                  <p className="text-gray-500 text-lg md:text-xl leading-relaxed font-serif italic line-clamp-3 md:line-clamp-4 border-l-4 border-gray-100 pl-6">
+                  <p className="text-gray-500 text-base md:text-lg leading-relaxed font-serif italic line-clamp-2 md:line-clamp-3 border-l-4 border-gray-100 pl-5">
                     {post.excerpt}
                   </p>
 
-                  <div className="flex items-center space-x-5 pt-6">
-                    <div className="w-12 h-12 rounded-full bg-gray-50 flex items-center justify-center font-serif font-bold text-gray-400 border border-gray-100 shadow-inner">
+                  <div className="flex items-center space-x-4 pt-4">
+                    <div className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center font-serif font-bold text-gray-400 border border-gray-100 shadow-inner text-xs">
                       N
                     </div>
-                    <div className="space-y-0.5">
-                      <p className="font-black text-gray-900 uppercase tracking-widest text-[11px]">Editor Nexthos</p>
-                      <p className="text-gray-400 text-sm font-medium">
+                    <div className="space-y-0">
+                      <p className="font-black text-gray-900 uppercase tracking-widest text-[10px]">Editor Nexthos</p>
+                      <p className="text-gray-400 text-xs font-medium">
                         {format(new Date(post.date), "yyyy년 M월 d일", { locale: ko })}
                       </p>
                     </div>
