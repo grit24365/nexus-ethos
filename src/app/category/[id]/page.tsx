@@ -24,17 +24,22 @@ export default async function CategoryPage({ params, searchParams }: Props) {
   const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
   const paginatedPosts = filteredPosts.slice(startIndex, startIndex + POSTS_PER_PAGE);
 
-  const categoryNames: Record<string, string> = {
-    trends: "AI 기술 동향",
-    opportunity: "AI 시대의 새로운 지평",
-    insight: "에토스의 지혜와 성찰"
+  const categoryMap: Record<string, { en: string; ko: string }> = {
+    trends: { en: "Trend", ko: "AI 기술 동향" },
+    opportunity: { en: "Opportunity", ko: "AI 시대의 새로운 지평" },
+    insight: { en: "Insight", ko: "에토스의 지혜와 성찰" }
   };
+
+  const currentCategory = categoryMap[id] || { en: id, ko: id };
 
   return (
     <div className="space-y-12">
-      <header className="py-12 border-b border-gray-100">
-        <h1 className="text-sm font-black uppercase tracking-[0.4em] text-blue-600 mb-4 text-center">CATEGORY</h1>
-        <h2 className="text-4xl md:text-5xl font-serif font-bold text-center capitalize">{categoryNames[id] || id}</h2>
+      <header className="py-16 border-b border-gray-100 text-center space-y-4">
+        <h1 className="text-sm font-black uppercase tracking-[0.4em] text-blue-600">CATEGORY</h1>
+        <div className="space-y-2">
+          <h2 className="text-5xl md:text-7xl font-serif font-bold uppercase tracking-tight">{currentCategory.en}</h2>
+          <p className="text-lg md:text-xl font-medium text-gray-400 italic font-serif">{currentCategory.ko}</p>
+        </div>
       </header>
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 min-h-[400px]">
