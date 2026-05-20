@@ -29,6 +29,7 @@ export default function RootLayout({
   return (
     <html lang="ko" className={`${inter.variable} ${playfair.variable}`}>
       <head>
+        <meta name="google-adsense-account" content="ca-pub-2321752351783659" />
         {/* Google AdSense */}
         {ADSENSE_ID && (
           <Script
