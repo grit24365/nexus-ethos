@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
 import Script from "next/script";
+import MobileMenu from "@/components/MobileMenu";
 import "./globals.css";
 
 const inter = Inter({
@@ -81,9 +82,7 @@ export default function RootLayout({
                   <span className="text-[10px] font-medium text-gray-400 group-hover:text-gray-600 transition-colors">에토스의 지혜와 성찰</span>
                 </a>
               </nav>
-              <button className="md:hidden p-2">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
-              </button>
+              <MobileMenu />
             </div>
           </header>
           
