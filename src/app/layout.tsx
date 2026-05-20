@@ -67,10 +67,19 @@ export default function RootLayout({
                   <a href="/" className="hover:opacity-80 transition">NEXUS ETHOS</a>
                 </h1>
               </div>
-              <nav className="hidden md:flex space-x-10 text-sm font-bold uppercase tracking-widest text-gray-500">
-                <a href="/category/trends" className="hover:text-black transition py-2 border-b-2 border-transparent hover:border-black">Trends</a>
-                <a href="/category/opportunity" className="hover:text-black transition py-2 border-b-2 border-transparent hover:border-black">New Horizons</a>
-                <a href="/category/insight" className="hover:text-black transition py-2 border-b-2 border-transparent hover:border-black">The Wisdom</a>
+              <nav className="hidden md:flex space-x-12">
+                <a href="/category/trends" className="group flex flex-col items-center">
+                  <span className="text-sm font-black uppercase tracking-[0.2em] text-gray-500 group-hover:text-black transition-colors">Trend</span>
+                  <span className="text-[10px] font-medium text-gray-400 group-hover:text-gray-600 transition-colors">AI 기술 동향</span>
+                </a>
+                <a href="/category/opportunity" className="group flex flex-col items-center">
+                  <span className="text-sm font-black uppercase tracking-[0.2em] text-gray-500 group-hover:text-black transition-colors">Opportunity</span>
+                  <span className="text-[10px] font-medium text-gray-400 group-hover:text-gray-600 transition-colors">AI 시대의 새로운 지평</span>
+                </a>
+                <a href="/category/insight" className="group flex flex-col items-center">
+                  <span className="text-sm font-black uppercase tracking-[0.2em] text-gray-500 group-hover:text-black transition-colors">Insight</span>
+                  <span className="text-[10px] font-medium text-gray-400 group-hover:text-gray-600 transition-colors">에토스의 지혜와 성찰</span>
+                </a>
               </nav>
               <button className="md:hidden p-2">
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
