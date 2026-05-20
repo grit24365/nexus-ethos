@@ -68,9 +68,9 @@ export default function FeaturedCarousel({ posts }: FeaturedCarouselProps) {
         >
           {extendedPosts.map((post, idx) => (
             <div key={`${post.slug}-${idx}`} className="w-full flex-shrink-0">
-              <Link href={`/blog/${post.slug}`} className="grid md:grid-cols-2 gap-0 items-stretch">
+              <Link href={`/blog/${post.slug}`} className="grid md:grid-cols-2 gap-0 items-stretch overflow-hidden rounded-[2.5rem]">
                 {/* Image Section */}
-                <div className="relative h-64 md:h-[420px] bg-gray-900 overflow-hidden">
+                <div className="relative h-64 md:h-[420px] bg-gray-900 overflow-hidden rounded-t-[2.5rem] md:rounded-t-none md:rounded-l-[2.5rem]">
                   <SmartImage 
                     src={post.coverImage || "https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=1200&auto=format&fit=crop"} 
                     alt={post.title}
