@@ -102,9 +102,9 @@ export default function RootLayout({
               <div className="space-y-4">
                 <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-gray-500">Categories</h3>
                 <ul className="space-y-2 text-sm text-gray-400 font-medium">
-                  <li><a href="/category/trends" className="hover:text-white transition">AI 기술 동향</a></li>
-                  <li><a href="/category/opportunity" className="hover:text-white transition">AI 시대의 새로운 지평</a></li>
-                  <li><a href="/category/insight" className="hover:text-white transition">에토스의 지혜와 성찰</a></li>
+                  <li><a href="/category/trends" className="hover:text-white transition">Trend</a></li>
+                  <li><a href="/category/opportunity" className="hover:text-white transition">Opportunity</a></li>
+                  <li><a href="/category/insight" className="hover:text-white transition">Insight</a></li>
                 </ul>
               </div>
               <div className="space-y-4">
