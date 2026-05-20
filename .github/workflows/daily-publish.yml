@@ -21,18 +21,22 @@ jobs:
 
       - name: Install dependencies
         run: |
-          # gemini-cli 설치 및 필요한 라이브러리 설치 로직
-          pip install google-generativeai # 또는 gemini-cli가 npm 패키지라면 npm install
+          pip install google-generativeai google-analytics-data
 
       - name: Generate Post
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-        run: python scripts/generate_post.py
+          GA4_PROPERTY_ID: ${{ secrets.GA4_PROPERTY_ID }}
+          GOOGLE_APPLICATION_CREDENTIALS_JSON: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_JSON }}
+        run: |
+          echo "$GOOGLE_APPLICATION_CREDENTIALS_JSON" > service-account.json
+          export GOOGLE_APPLICATION_CREDENTIALS=service-account.json
+          python scripts/generate_post.py
 
       - name: Commit and Push
         run: |
           git config --global user.name "Nexthos (AI Bot)"
           git config --global user.email "bot@nexus-ethos.com"
           git add content/posts/*.md
-          git commit -m "Auto-generate daily insight: $(date +'%Y-%m-%d')"
+          git commit -m "Auto-generate data-driven insight: $(date +'%Y-%m-%d')"
           git push

@@ -3,6 +3,7 @@ import subprocess
 import datetime
 import json
 import re
+from get_analytics_data import get_top_performing_topics
 
 # Configuration
 POSTS_DIR = "content/posts"
@@ -11,6 +12,7 @@ CATEGORIES = {
     "opportunity": "AI 시대의 새로운 지평",
     "insight": "에토스의 지혜와 성찰"
 }
+GA4_PROPERTY_ID = os.getenv("GA4_PROPERTY_ID")
 
 def run_gemini(prompt):
     """Calls the Gemini CLI to process a prompt."""
@@ -34,11 +36,19 @@ def clean_json(text):
     return text
 
 def generate_full_post():
-    print("--- Phase 1: Topic Selection (Monetization & Practicality) ---")
+    print("--- Phase 1: Topic Selection (Data-Driven) ---")
+    
+    # Fetch real performance data
+    analytics_insight = ""
+    if GA4_PROPERTY_ID:
+        top_posts = get_top_performing_topics(GA4_PROPERTY_ID)
+        if top_posts:
+            analytics_insight = f"\n[최근 인기 포스트 데이터]: {json.dumps(top_posts, ensure_ascii=False)}\n위 데이터를 분석하여 독자들이 최근 어떤 주제에 가장 큰 반응을 보였는지 파악하고, 그 연장선상에서 더 깊은 통찰을 줄 수 있는 주제를 선정하세요."
+
     topic_prompt = f"""
     당신은 '넥서스 에토스(Nexus Ethos)'의 편집장 '넥토스(Nexthos)'입니다. 
     숙련된 지혜의 세대를 위해, 다음의 고단가(High-CPC) 핵심 키워드 중 하나를 포함한 구체적이고 실제적인 주제를 선정하세요.
-    핵심 키워드: 금융/자산관리, AI 연금 전략, 상속/법률 서비스, 프리미엄 헬스케어, 리쇼어링 투자 전략.
+    핵심 키워드: 금융/자산관리, AI 연금 전략, 상속/법률 서비스, 프리미엄 헬스케어, 리쇼어링 투자 전략.{analytics_insight}
     
     카테고리 옵션:
     - trends: {CATEGORIES['trends']}
@@ -58,7 +68,7 @@ def generate_full_post():
     
     print(f"Selected Topic: {title} ({category})")
     
-    print("--- Phase 2: Content Generation (E-E-A-T & Revenue Optimized) ---")
+    print("--- Phase 2: Content Generation (SEO & Data Optimized) ---")
     content_prompt = f"""
     당신은 '넥서스 에토스(Nexus Ethos)'의 편집장 '넥토스(Nexthos)'입니다. 
     아래 주제로 심층적인 칼럼을 작성하세요.
@@ -100,8 +110,9 @@ def generate_full_post():
         f.write(f"coverImage: \"{cover_image}\"\n")
         f.write("---\n\n")
         f.write(content)
+        f.write(f"\n\n---\n*가치 있는 통찰은 나누었을 때 더 큰 지혜가 됩니다. 본 칼럼이 도움이 되셨다면 주변의 소중한 분들에게 공유해 보세요.*")
     
-    print(f"Successfully generated optimized post: {filepath}")
+    print(f"Successfully generated data-driven post: {filepath}")
 
 if __name__ == "__main__":
     if not os.path.exists(POSTS_DIR):
