@@ -5,6 +5,7 @@ import remarkGfm from "remark-gfm";
 import { format } from "date-fns";
 import { ko } from "date-fns/locale";
 import SmartImage from "@/components/SmartImage";
+import SocialShare from "@/components/SocialShare";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -70,6 +71,9 @@ export default async function PostPage({ params }: Props) {
           {post.content}
         </ReactMarkdown>
       </div>
+
+      {/* Social Share Section */}
+      <SocialShare title={post.title} url={`https://nexthos.vercel.app/blog/${slug}`} />
 
       {/* Ad Slot: In-Content (Bottom of Article) */}
       <div className="max-w-3xl mx-auto mt-24 py-16 border-y border-gray-100 flex flex-col items-center space-y-6">
