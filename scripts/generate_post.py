@@ -27,15 +27,24 @@ def run_gemini(prompt):
     if not client:
         print("CRITICAL ERROR: GEMINI_API_KEY is not available.")
         return None
-    try:
-        response = client.models.generate_content(
-            model='gemini-1.5-flash',
-            contents=prompt
-        )
-        return response.text.strip()
-    except Exception as e:
-        print(f"Error calling Gemini SDK: {e}")
-        return None
+    
+    # Retry logic for 429 errors
+    import time
+    for attempt in range(3):
+        try:
+            response = client.models.generate_content(
+                model='gemini-1.5-flash',
+                contents=prompt
+            )
+            return response.text.strip()
+        except Exception as e:
+            if "429" in str(e) and attempt < 2:
+                print(f"Quota reached, retrying in 10s... (Attempt {attempt + 1})")
+                time.sleep(10)
+                continue
+            print(f"Error calling Gemini SDK: {e}")
+            return None
+    return None
 
 def clean_json(text):
     """Extracts JSON from a potentially markdown-formatted response."""
