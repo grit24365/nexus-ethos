@@ -2,7 +2,7 @@ name: Daily Content Publish
 
 on:
   schedule:
-    - cron: '5 22 * * *' # 매일 한국 시간 오전 7시 5분 (UTC 22:05)
+    - cron: '10 23 * * *' # 매일 한국 시간 오전 8시 10분 (UTC 23:10)
   workflow_dispatch: # 수동 실행 가능
 
 jobs:
@@ -23,7 +23,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install google-generativeai google-analytics-data
+          pip install google-genai google-analytics-data
 
       - name: Generate Post
         env:
@@ -39,6 +39,7 @@ jobs:
         run: |
           git config --global user.name "Nexthos (AI Bot)"
           git config --global user.email "bot@nexus-ethos.com"
+          git status
           git add content/posts/*.md
           git commit -m "Auto-generate data-driven insight: $(date +'%Y-%m-%d')" || echo "No changes to commit"
-          git push
+          git push origin main
