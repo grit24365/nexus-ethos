@@ -69,9 +69,10 @@ export default function SocialShare({ title, url }: SocialShareProps) {
           </button>
         </div>
         
-        <p className="text-[10px] md:text-xs text-gray-400 font-serif italic text-center whitespace-nowrap overflow-hidden text-ellipsis px-4">
-          가치 있는 통찰은 나누었을 때 더 큰 지혜가 됩니다. 주변의 소중한 분들에게 이 통찰을 전해주세요.
-        </p>
+        <div className="text-[11px] md:text-xs text-gray-400 font-serif italic text-center leading-relaxed">
+          <p>가치 있는 통찰은 나누었을 때 더 큰 지혜가 됩니다.</p>
+          <p>주변의 소중한 분들에게 이 통찰을 전해주세요.</p>
+        </div>
       </div>
     </div>
   );
