@@ -6,7 +6,7 @@ import google.generativeai as genai
 import warnings
 from get_analytics_data import get_top_performing_topics
 
-# Ignore the FutureWarning as we need the stability of the old SDK for now
+# Ignore the FutureWarning
 warnings.filterwarnings("ignore", category=FutureWarning)
 
 # Configuration
@@ -19,36 +19,47 @@ CATEGORIES = {
 GA4_PROPERTY_ID = os.getenv("GA4_PROPERTY_ID")
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
-# Initialize Gemini with the stable SDK
-if GEMINI_API_KEY:
-    genai.configure(api_key=GEMINI_API_KEY)
+def find_available_model():
+    """Lists and finds the best available model to avoid 404 errors."""
+    try:
+        print("Checking available models...")
+        available_models = [m.name for m in genai.list_models() if 'generateContent' in m.supported_generation_methods]
+        print(f"Found models: {available_models}")
+        
+        # Priority list
+        priority = ['models/gemini-1.5-flash', 'models/gemini-1.5-pro', 'models/gemini-1.0-pro', 'models/gemini-pro']
+        for p in priority:
+            if p in available_models:
+                # Return without 'models/' prefix as SDK adds it
+                return p.replace('models/', '')
+        
+        # If none of priorities found, take the first one
+        if available_models:
+            return available_models[0].replace('models/', '')
+    except Exception as e:
+        print(f"Error listing models: {e}")
+    
+    # Ultimate fallback
+    return 'gemini-1.5-flash'
 
 def run_gemini(prompt):
-    """Calls the Gemini API with multiple model fallbacks for extreme reliability."""
+    """Calls the Gemini API with auto-detected model."""
     if not GEMINI_API_KEY:
         print("CRITICAL ERROR: GEMINI_API_KEY is not available.")
         return None
     
-    # List of models to try in order of preference/stability
-    models_to_try = [
-        'gemini-1.5-flash',
-        'gemini-1.5-flash-latest',
-        'gemini-1.5-pro',
-        'gemini-1.0-pro'
-    ]
+    genai.configure(api_key=GEMINI_API_KEY)
+    model_name = find_available_model()
     
-    for model_name in models_to_try:
-        try:
-            print(f"Attempting generation with model: {model_name}...")
-            model = genai.GenerativeModel(model_name)
-            response = model.generate_content(prompt)
-            if response and response.text:
-                return response.text.strip()
-        except Exception as e:
-            print(f"Model {model_name} failed: {e}")
-            continue
+    try:
+        print(f"Using model: {model_name}")
+        model = genai.GenerativeModel(model_name)
+        response = model.generate_content(prompt)
+        if response and response.text:
+            return response.text.strip()
+    except Exception as e:
+        print(f"Generation failed with {model_name}: {e}")
             
-    print("CRITICAL ERROR: All available models failed to respond.")
     return None
 
 def clean_json(text):
@@ -68,10 +79,8 @@ def generate_full_post():
     analytics_insight = ""
     if GA4_PROPERTY_ID:
         try:
-            print(f"Fetching analytics for Property ID: {GA4_PROPERTY_ID}")
             top_posts = get_top_performing_topics(GA4_PROPERTY_ID)
             if top_posts:
-                print(f"Analytics found: {len(top_posts)} topics.")
                 analytics_insight = f"\n[최근 인기 포스트 데이터]: {json.dumps(top_posts, ensure_ascii=False)}\n위 데이터를 분석하여 독자들이 최근 어떤 주제에 가장 큰 반응을 보였는지 파악하고, 그 연장선상에서 더 깊은 통찰을 줄 수 있는 주제를 선정하세요."
         except Exception as e:
             print(f"Warning: Analytics fetch failed. {e}")
@@ -112,11 +121,11 @@ def generate_full_post():
     요점: {", ".join(topic_data['key_points'])}
     
     [필수 가이드라인]
-    1. 말투: 노련한 전문가의 1인칭 관찰자 시점(경험 공유형). (예: "제가 현장에서 만난 분들은...", "이 도구를 직접 써보니...")
+    1. 말투: 노련한 전문가의 1인칭 관찰자 시점(경험 공유형).
     2. SEO: 제목 앞부분에 키워드 배치, 본문 첫 3문장에 키워드 포함.
     3. 실질적 도움: 구체적인 도구 이름, 웹사이트, 수치 포함.
     4. 분량: 한글 기준 2,200자 내외로 매우 깊이 있게. 
-    5. 금기: '4060 세대' 사용 금지. '사회의 중추', '지혜의 목소리' 등으로 대체.
+    5. 금기: '4060 세대' 사용 금지. '사회의 중추' 등으로 대체.
     6. 마지막 문장: "가치 있는 통찰은 나누었을 때 더 큰 지혜가 됩니다. 본 칼럼이 도움이 되셨다면 주변의 소중한 분들에게 공유해 보세요."
 
     출력 형식: Markdown (##, ### 사용)
