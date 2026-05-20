@@ -8,6 +8,8 @@ on:
 jobs:
   generate-and-deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -31,12 +33,12 @@ jobs:
         run: |
           echo "$GOOGLE_APPLICATION_CREDENTIALS_JSON" > service-account.json
           export GOOGLE_APPLICATION_CREDENTIALS=service-account.json
-          python scripts/generate_post.py
+          python3 scripts/generate_post.py
 
       - name: Commit and Push
         run: |
           git config --global user.name "Nexthos (AI Bot)"
           git config --global user.email "bot@nexus-ethos.com"
           git add content/posts/*.md
-          git commit -m "Auto-generate data-driven insight: $(date +'%Y-%m-%d')"
+          git commit -m "Auto-generate data-driven insight: $(date +'%Y-%m-%d')" || echo "No changes to commit"
           git push

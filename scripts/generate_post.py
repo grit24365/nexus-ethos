@@ -1,8 +1,8 @@
 import os
-import subprocess
 import datetime
 import json
 import re
+import google.generativeai as genai
 from get_analytics_data import get_top_performing_topics
 
 # Configuration
@@ -13,19 +13,25 @@ CATEGORIES = {
     "insight": "에토스의 지혜와 성찰"
 }
 GA4_PROPERTY_ID = os.getenv("GA4_PROPERTY_ID")
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+
+# Initialize Gemini
+if GEMINI_API_KEY:
+    genai.configure(api_key=GEMINI_API_KEY)
+    model = genai.GenerativeModel('gemini-2.0-flash')
+else:
+    model = None
 
 def run_gemini(prompt):
-    """Calls the Gemini CLI to process a prompt."""
+    """Calls the Gemini API directly via SDK."""
+    if not model:
+        print("Error: GEMINI_API_KEY not set.")
+        return None
     try:
-        result = subprocess.run(
-            ["gemini-cli", "ask", prompt],
-            capture_output=True,
-            text=True,
-            check=True
-        )
-        return result.stdout.strip()
+        response = model.generate_content(prompt)
+        return response.text.strip()
     except Exception as e:
-        print(f"Error calling Gemini: {e}")
+        print(f"Error calling Gemini SDK: {e}")
         return None
 
 def clean_json(text):
@@ -36,14 +42,21 @@ def clean_json(text):
     return text
 
 def generate_full_post():
+    if not GEMINI_API_KEY:
+        print("Skipping generation: GEMINI_API_KEY is missing.")
+        return
+
     print("--- Phase 1: Topic Selection (Data-Driven) ---")
     
     # Fetch real performance data
     analytics_insight = ""
     if GA4_PROPERTY_ID:
-        top_posts = get_top_performing_topics(GA4_PROPERTY_ID)
-        if top_posts:
-            analytics_insight = f"\n[최근 인기 포스트 데이터]: {json.dumps(top_posts, ensure_ascii=False)}\n위 데이터를 분석하여 독자들이 최근 어떤 주제에 가장 큰 반응을 보였는지 파악하고, 그 연장선상에서 더 깊은 통찰을 줄 수 있는 주제를 선정하세요."
+        try:
+            top_posts = get_top_performing_topics(GA4_PROPERTY_ID)
+            if top_posts:
+                analytics_insight = f"\n[최근 인기 포스트 데이터]: {json.dumps(top_posts, ensure_ascii=False)}\n위 데이터를 분석하여 독자들이 최근 어떤 주제에 가장 큰 반응을 보였는지 파악하고, 그 연장선상에서 더 깊은 통찰을 줄 수 있는 주제를 선정하세요."
+        except Exception as e:
+            print(f"Warning: Analytics fetch failed, proceeding without data. {e}")
 
     topic_prompt = f"""
     당신은 '넥서스 에토스(Nexus Ethos)'의 편집장 '넥토스(Nexthos)'입니다. 
@@ -62,7 +75,12 @@ def generate_full_post():
     raw_topic = run_gemini(topic_prompt)
     if not raw_topic: return
     
-    topic_data = json.loads(clean_json(raw_topic))
+    try:
+        topic_data = json.loads(clean_json(raw_topic))
+    except Exception as e:
+        print(f"Error parsing topic JSON: {e}\nRaw response: {raw_topic}")
+        return
+
     category = topic_data['category']
     title = topic_data['title']
     
@@ -94,10 +112,15 @@ def generate_full_post():
     content = run_gemini(content_prompt)
     if not content: return
     
-    cover_image = f"https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=1200&auto=format&fit=crop" # Default
+    # Generic high-quality tech/finance image IDs to rotate
+    img_ids = ["photo-1519389950473-47ba0277781c", "photo-1460925895917-afdab827c52f", "photo-1551288049-bbbda536339a", "photo-1518186285589-2f7649de83e0"]
+    import random
+    selected_img = random.choice(img_ids)
+    cover_image = f"https://images.unsplash.com/{selected_img}?q=80&w=1200&auto=format&fit=crop"
     
     today = datetime.datetime.now().strftime("%Y-%m-%d")
-    slug = re.sub(r'[^a-z0-9]', '-', title.lower()).strip('-')[:50]
+    # Clean slug for filename
+    slug = re.sub(r'[^a-zA-Z0-9가-힣]', '-', title.lower()).strip('-')[:50]
     filename = f"{today}-{slug}.md"
     filepath = os.path.join(POSTS_DIR, filename)
     
