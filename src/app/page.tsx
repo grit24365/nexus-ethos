@@ -10,8 +10,8 @@ export default function Home() {
   
   // Latest 3 posts for the Carousel
   const featuredPosts = allPosts.slice(0, 3);
-  // Remaining posts for the Grid
-  const remainingPosts = allPosts.slice(3);
+  // Remaining posts for the Grid (Limit to 9)
+  const remainingPosts = allPosts.slice(3, 12);
 
   const defaultGridImage = "https://images.unsplash.com/photo-1620712943543-bcc4628c6757?q=80&w=800&auto=format&fit=crop";
 
