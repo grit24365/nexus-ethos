@@ -41,9 +41,15 @@ export function getSortedPostsData(): Post[] {
       };
     });
 
-  // Sort posts by date
+  // Sort posts by date (newest first)
   return allPostsData.sort((a, b) => {
-    return new Date(b.date).getTime() - new Date(a.date).getTime();
+    const dateA = new Date(a.date).getTime();
+    const dateB = new Date(b.date).getTime();
+    if (dateB !== dateA) {
+      return dateB - dateA;
+    }
+    // If dates are same, sort by slug (often contains timestamp) descending
+    return b.slug.localeCompare(a.slug);
   });
 }
 
