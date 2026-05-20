@@ -11,7 +11,7 @@ export default function ContactPage() {
         <div className="space-y-2">
           <h3 className="text-lg font-bold">제휴 및 기고 문의</h3>
           <p className="text-gray-600">넥서스 에토스와의 협업이나 고견을 나누고 싶은 분들은 아래 메일로 연락 주시기 바랍니다.</p>
-          <p className="text-xl font-serif font-bold text-blue-600">grit24365 (jhlee8006@gmail.com)</p>
+          <p className="text-xl font-serif font-bold text-blue-600">grit24365@gmail.com</p>
         </div>
         
         <div className="pt-8 border-t border-gray-50 space-y-2">
