@@ -43,20 +43,23 @@ def clean_json(text):
 
 def generate_full_post():
     if not GEMINI_API_KEY:
-        print("Skipping generation: GEMINI_API_KEY is missing.")
-        return
+        print("CRITICAL ERROR: GEMINI_API_KEY is missing from environment variables.")
+        exit(1)
 
     print("--- Phase 1: Topic Selection (Data-Driven) ---")
     
-    # Fetch real performance data
     analytics_insight = ""
     if GA4_PROPERTY_ID:
         try:
+            print(f"Fetching analytics for Property ID: {GA4_PROPERTY_ID}")
             top_posts = get_top_performing_topics(GA4_PROPERTY_ID)
             if top_posts:
+                print(f"Analytics found: {len(top_posts)} topics.")
                 analytics_insight = f"\n[최근 인기 포스트 데이터]: {json.dumps(top_posts, ensure_ascii=False)}\n위 데이터를 분석하여 독자들이 최근 어떤 주제에 가장 큰 반응을 보였는지 파악하고, 그 연장선상에서 더 깊은 통찰을 줄 수 있는 주제를 선정하세요."
+            else:
+                print("No analytics data found for the last 7 days.")
         except Exception as e:
-            print(f"Warning: Analytics fetch failed, proceeding without data. {e}")
+            print(f"Warning: Analytics fetch failed. Continuing without data. Error: {e}")
 
     topic_prompt = f"""
     당신은 '넥서스 에토스(Nexus Ethos)'의 편집장 '넥토스(Nexthos)'입니다. 
@@ -72,19 +75,22 @@ def generate_full_post():
     {{"category": "trends/opportunity/insight 중 하나", "title": "구체적인 제목", "key_points": ["실천방안1", "실천방안2", "실천방안3"], "img_keyword": "unsplash_keyword"}}
     """
     
+    print("Calling Gemini API for topic selection...")
     raw_topic = run_gemini(topic_prompt)
-    if not raw_topic: return
+    if not raw_topic:
+        print("CRITICAL ERROR: Failed to get topic response from Gemini.")
+        exit(1)
     
     try:
         topic_data = json.loads(clean_json(raw_topic))
     except Exception as e:
-        print(f"Error parsing topic JSON: {e}\nRaw response: {raw_topic}")
-        return
+        print(f"CRITICAL ERROR: JSON Parsing failed. Raw response: {raw_topic}")
+        exit(1)
 
     category = topic_data['category']
     title = topic_data['title']
     
-    print(f"Selected Topic: {title} ({category})")
+    print(f"Success! Selected Topic: {title} ({category})")
     
     print("--- Phase 2: Content Generation (SEO & Data Optimized) ---")
     content_prompt = f"""
@@ -109,8 +115,11 @@ def generate_full_post():
     출력 형식: Markdown (##, ### 헤더 사용)
     """
     
+    print("Calling Gemini API for full content generation...")
     content = run_gemini(content_prompt)
-    if not content: return
+    if not content:
+        print("CRITICAL ERROR: Failed to generate content from Gemini.")
+        exit(1)
     
     # Generic high-quality tech/finance image IDs to rotate
     img_ids = ["photo-1519389950473-47ba0277781c", "photo-1460925895917-afdab827c52f", "photo-1551288049-bbbda536339a", "photo-1518186285589-2f7649de83e0"]
@@ -119,11 +128,11 @@ def generate_full_post():
     cover_image = f"https://images.unsplash.com/{selected_img}?q=80&w=1200&auto=format&fit=crop"
     
     today = datetime.datetime.now().strftime("%Y-%m-%d")
-    # Clean slug for filename
     slug = re.sub(r'[^a-zA-Z0-9가-힣]', '-', title.lower()).strip('-')[:50]
     filename = f"{today}-{slug}.md"
     filepath = os.path.join(POSTS_DIR, filename)
     
+    print(f"Saving post to {filepath}...")
     with open(filepath, "w", encoding="utf-8") as f:
         f.write("---\n")
         f.write(f"title: \"{title}\"\n")
@@ -135,7 +144,7 @@ def generate_full_post():
         f.write(content)
         f.write(f"\n\n---\n*가치 있는 통찰은 나누었을 때 더 큰 지혜가 됩니다. 본 칼럼이 도움이 되셨다면 주변의 소중한 분들에게 공유해 보세요.*")
     
-    print(f"Successfully generated data-driven post: {filepath}")
+    print(f"SUCCESS: Post generated and saved as {filename}")
 
 if __name__ == "__main__":
     if not os.path.exists(POSTS_DIR):
