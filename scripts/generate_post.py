@@ -2,8 +2,12 @@ import os
 import datetime
 import json
 import re
-from google import genai
+import google.generativeai as genai
+import warnings
 from get_analytics_data import get_top_performing_topics
+
+# Ignore the FutureWarning as we need the stability of the old SDK for now
+warnings.filterwarnings("ignore", category=FutureWarning)
 
 # Configuration
 POSTS_DIR = "content/posts"
@@ -15,35 +19,36 @@ CATEGORIES = {
 GA4_PROPERTY_ID = os.getenv("GA4_PROPERTY_ID")
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
-# Initialize Gemini with the new SDK
-def get_gemini_client():
-    if not GEMINI_API_KEY:
-        return None
-    return genai.Client(api_key=GEMINI_API_KEY)
+# Initialize Gemini with the stable SDK
+if GEMINI_API_KEY:
+    genai.configure(api_key=GEMINI_API_KEY)
 
 def run_gemini(prompt):
-    """Calls the Gemini API using the latest google-genai SDK."""
-    client = get_gemini_client()
-    if not client:
+    """Calls the Gemini API with multiple model fallbacks for extreme reliability."""
+    if not GEMINI_API_KEY:
         print("CRITICAL ERROR: GEMINI_API_KEY is not available.")
         return None
     
-    # Retry logic for 429 errors
-    import time
-    for attempt in range(3):
+    # List of models to try in order of preference/stability
+    models_to_try = [
+        'gemini-1.5-flash',
+        'gemini-1.5-flash-latest',
+        'gemini-1.5-pro',
+        'gemini-1.0-pro'
+    ]
+    
+    for model_name in models_to_try:
         try:
-            response = client.models.generate_content(
-                model='gemini-1.5-flash',
-                contents=prompt
-            )
-            return response.text.strip()
+            print(f"Attempting generation with model: {model_name}...")
+            model = genai.GenerativeModel(model_name)
+            response = model.generate_content(prompt)
+            if response and response.text:
+                return response.text.strip()
         except Exception as e:
-            if "429" in str(e) and attempt < 2:
-                print(f"Quota reached, retrying in 10s... (Attempt {attempt + 1})")
-                time.sleep(10)
-                continue
-            print(f"Error calling Gemini SDK: {e}")
-            return None
+            print(f"Model {model_name} failed: {e}")
+            continue
+            
+    print("CRITICAL ERROR: All available models failed to respond.")
     return None
 
 def clean_json(text):
@@ -55,7 +60,7 @@ def clean_json(text):
 
 def generate_full_post():
     if not GEMINI_API_KEY:
-        print("CRITICAL ERROR: GEMINI_API_KEY is missing from environment variables.")
+        print("CRITICAL ERROR: GEMINI_API_KEY is missing.")
         exit(1)
 
     print("--- Phase 1: Topic Selection (Data-Driven) ---")
@@ -66,6 +71,7 @@ def generate_full_post():
             print(f"Fetching analytics for Property ID: {GA4_PROPERTY_ID}")
             top_posts = get_top_performing_topics(GA4_PROPERTY_ID)
             if top_posts:
+                print(f"Analytics found: {len(top_posts)} topics.")
                 analytics_insight = f"\n[최근 인기 포스트 데이터]: {json.dumps(top_posts, ensure_ascii=False)}\n위 데이터를 분석하여 독자들이 최근 어떤 주제에 가장 큰 반응을 보였는지 파악하고, 그 연장선상에서 더 깊은 통찰을 줄 수 있는 주제를 선정하세요."
         except Exception as e:
             print(f"Warning: Analytics fetch failed. {e}")
@@ -84,7 +90,6 @@ def generate_full_post():
     {{"category": "trends/opportunity/insight 중 하나", "title": "구체적인 제목", "key_points": ["실천방안1", "실천방안2", "실천방안3"]}}
     """
     
-    print("Requesting topic...")
     raw_topic = run_gemini(topic_prompt)
     if not raw_topic: exit(1)
     
@@ -107,12 +112,12 @@ def generate_full_post():
     요점: {", ".join(topic_data['key_points'])}
     
     [필수 가이드라인]
-    1. 말투: 노련한 전문가의 1인칭 관찰자 시점(경험 공유형).
+    1. 말투: 노련한 전문가의 1인칭 관찰자 시점(경험 공유형). (예: "제가 현장에서 만난 분들은...", "이 도구를 직접 써보니...")
     2. SEO: 제목 앞부분에 키워드 배치, 본문 첫 3문장에 키워드 포함.
     3. 실질적 도움: 구체적인 도구 이름, 웹사이트, 수치 포함.
     4. 분량: 한글 기준 2,200자 내외로 매우 깊이 있게. 
-    5. 금기: '4060 세대' 사용 금지. '사회의 중추' 등으로 대체.
-    6. 마지막 문장: 주변 공유 유도 멘트.
+    5. 금기: '4060 세대' 사용 금지. '사회의 중추', '지혜의 목소리' 등으로 대체.
+    6. 마지막 문장: "가치 있는 통찰은 나누었을 때 더 큰 지혜가 됩니다. 본 칼럼이 도움이 되셨다면 주변의 소중한 분들에게 공유해 보세요."
 
     출력 형식: Markdown (##, ### 사용)
     """
@@ -126,7 +131,8 @@ def generate_full_post():
     
     today = datetime.datetime.now().strftime("%Y-%m-%d")
     slug = re.sub(r'[^a-zA-Z0-9가-힣]', '-', title.lower()).strip('-')[:50]
-    filepath = os.path.join(POSTS_DIR, f"{today}-{slug}.md")
+    filename = f"{today}-{slug}.md"
+    filepath = os.path.join(POSTS_DIR, filename)
     
     with open(filepath, "w", encoding="utf-8") as f:
         f.write("---\n")
@@ -137,7 +143,6 @@ def generate_full_post():
         f.write(f"coverImage: \"{cover_image}\"\n")
         f.write("---\n\n")
         f.write(content)
-        f.write(f"\n\n---\n*가치 있는 통찰은 나누었을 때 더 큰 지혜가 됩니다. 본 칼럼이 도움이 되셨다면 주변의 소중한 분들에게 공유해 보세요.*")
     
     print(f"SUCCESS: Post saved as {filepath}")
 

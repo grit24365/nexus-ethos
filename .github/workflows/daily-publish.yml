@@ -23,7 +23,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install google-genai google-analytics-data
+          pip install google-generativeai google-analytics-data
 
       - name: Generate Post
         env:
