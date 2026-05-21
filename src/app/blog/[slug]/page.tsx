@@ -2,7 +2,7 @@ import { getPostData, getSortedPostsData } from "@/lib/posts";
 import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { format } from "date-fns";
+import { format, parseISO } from "date-fns";
 import { ko } from "date-fns/locale";
 import SmartImage from "@/components/SmartImage";
 import SocialShare from "@/components/SocialShare";
@@ -28,6 +28,9 @@ export default async function PostPage({ params }: Props) {
 
   const defaultImage = "https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=1200&auto=format&fit=crop";
 
+  // Use parseISO to ensure the date string "YYYY-MM-DD" is interpreted consistently without timezone shifts
+  const postDate = parseISO(post.date);
+
   return (
     <article className="max-w-4xl mx-auto space-y-12">
       <header className="space-y-8 text-center">
@@ -35,7 +38,7 @@ export default async function PostPage({ params }: Props) {
           <span>{post.category}</span>
           <span className="text-gray-300">•</span>
           <time dateTime={post.date}>
-            {format(new Date(post.date), "yyyy년 M월 d일", { locale: ko })}
+            {format(postDate, "yyyy년 M월 d일", { locale: ko })}
           </time>
         </div>
         <h1 className="text-4xl md:text-6xl font-serif font-bold leading-tight tracking-tight">

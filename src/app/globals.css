@@ -45,9 +45,17 @@ a:hover {
 }
 
 .prose h2 {
-  font-size: 1.875rem;
-  margin-top: 2.5rem;
-  margin-bottom: 1.25rem;
+  font-size: 2.25rem; /* Increased from 1.875rem */
+  margin-top: 3rem;
+  margin-bottom: 1.5rem;
+  line-height: 1.3;
+}
+
+.prose h3 {
+  font-size: 1.5rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  line-height: 1.4;
 }
 
 .prose p {

@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { format } from "date-fns";
+import { format, parseISO } from "date-fns";
 import { ko } from "date-fns/locale";
 import SmartImage from "@/components/SmartImage";
 import { Post } from "@/lib/posts";
@@ -102,7 +102,7 @@ export default function FeaturedCarousel({ posts }: FeaturedCarouselProps) {
                     <div className="space-y-0">
                       <p className="font-black text-gray-900 uppercase tracking-widest text-[10px]">Editor Nexthos</p>
                       <p className="text-gray-400 text-xs font-medium">
-                        {format(new Date(post.date), "yyyy년 M월 d일", { locale: ko })}
+                        {format(parseISO(post.date), "yyyy년 M월 d일", { locale: ko })}
                       </p>
                     </div>
                   </div>
