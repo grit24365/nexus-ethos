@@ -2,7 +2,7 @@ name: Daily Content Publish
 
 on:
   schedule:
-    - cron: '10 23 * * *' # 매일 한국 시간 오전 8시 10분 (백업용)
+    - cron: '0 21 * * *' # 매일 한국 시간 오전 6시 (UTC 21:00)
   workflow_dispatch: # 수동 실행용
   repository_dispatch: # 외부 API 트리거용
     types: [publish_post]
@@ -21,11 +21,12 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.x'
+          python-version: '3.12'
 
       - name: Install dependencies
         run: |
-          pip install google-genai google-analytics-data
+          python3 -m pip install --upgrade pip
+          python3 -m pip install google-generativeai google-analytics-data
 
       - name: Generate Post
         env:
