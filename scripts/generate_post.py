@@ -26,39 +26,52 @@ if GEMINI_API_KEY:
     genai.configure(api_key=GEMINI_API_KEY)
 
 def run_gemini(prompt):
-    """Calls the Gemini API with multiple model fallbacks to handle 429 quota errors."""
+    """
+    Ultra-Robust Gemini Call: 
+    1. Auto-discovers all available models for the current API key.
+    2. Tries them one by one until one works (handles both 404 and 429).
+    """
     if not GEMINI_API_KEY:
         print("CRITICAL ERROR: GEMINI_API_KEY is not available.")
         return None
     
-    # Priority list of models to try
-    models_to_try = [
-        'gemini-1.5-flash',
-        'gemini-1.5-pro',
-        'gemini-2.0-flash', # Try 2.0 last if others fail
-        'gemini-pro'
-    ]
-    
-    for model_name in models_to_try:
-        try:
-            print(f"Attempting with model: {model_name}...")
-            model = genai.GenerativeModel(model_name)
-            response = model.generate_content(prompt)
-            if response and response.text:
-                return response.text.strip()
-        except Exception as e:
-            error_msg = str(e)
-            if "429" in error_msg:
-                print(f"Quota exceeded for {model_name}. Trying next model...")
-                continue
-            elif "404" in error_msg:
-                print(f"Model {model_name} not found. Trying next model...")
-                continue
-            else:
-                print(f"Generation failed with {model_name}: {e}")
+    try:
+        # Step 1: Discover available models
+        print("Searching for available models...")
+        available_models = [m.name for m in genai.list_models() if 'generateContent' in m.supported_generation_methods]
+        
+        if not available_models:
+            print("No models found supporting generateContent.")
+            return None
+            
+        # Sort models to prioritize flash/newer ones if possible
+        # We prefer flash for speed and quota
+        available_models.sort(key=lambda x: ("flash" not in x.lower(), x), reverse=False)
+        print(f"Found {len(available_models)} candidate models. Starting sweep...")
+
+        # Step 2: Try models in sequence
+        for model_path in available_models:
+            try:
+                print(f"Testing model: {model_path}...")
+                model = genai.GenerativeModel(model_name=model_path)
+                response = model.generate_content(prompt)
+                if response and response.text:
+                    print(f"Success with {model_path}!")
+                    return response.text.strip()
+            except Exception as e:
+                err = str(e).lower()
+                if "429" in err:
+                    print(f"  -> Quota full for {model_path}. Skipping.")
+                elif "404" in err or "not found" in err:
+                    print(f"  -> Model {model_path} not found. Skipping.")
+                else:
+                    print(f"  -> Error with {model_path}: {e}")
                 continue
                 
-    print("CRITICAL ERROR: All models failed or reached quota.")
+    except Exception as e:
+        print(f"Failed to even list models: {e}")
+            
+    print("CRITICAL ERROR: Exhausted all available models.")
     return None
 
 def clean_json(text):
@@ -108,7 +121,7 @@ def generate_full_post():
 
     category = topic_data['category']
     title = topic_data['title']
-    print(f"Selected: {title} ({topic_data['style']})")
+    print(f"Final Selection: {title} ({topic_data['style']})")
     
     print("--- Phase 2: Content Generation ---")
     content_prompt = f"""
@@ -123,7 +136,7 @@ def generate_full_post():
     2. 분량: 공백 포함 **1,200자 내외**.
     3. 구조: 도입(공감) - 본문(3개 리스트 상세 설명) - 결론(성찰).
     4. 금기: '4060 세대' 단어 금지. '사회의 중심축', '숙련된 지혜의 세대' 등으로 표현.
-    5. 마지막 문장: 공유 유도 문구 필수.
+    5. 마지막 문장: 가치 있는 통찰은 나누었을 때 더 큰 지혜가 됩니다. 주변의 소중한 분들에게 공유해 보세요.
 
     출력 형식: Markdown (## 헤더 사용)
     """
@@ -132,6 +145,7 @@ def generate_full_post():
     if not content: exit(1)
     
     img_ids = ["photo-1519389950473-47ba0277781c", "photo-1460925895917-afdab827c52f", "photo-1551288049-bbbda536339a", "photo-1518186285589-2f7649de83e0"]
+    import random
     cover_image = f"https://images.unsplash.com/{random.choice(img_ids)}?q=80&w=1200&auto=format&fit=crop"
     
     today = datetime.datetime.now().strftime("%Y-%m-%d")
