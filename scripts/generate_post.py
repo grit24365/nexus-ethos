@@ -146,13 +146,17 @@ def generate_full_post():
     
     img_ids = ["photo-1519389950473-47ba0277781c", "photo-1460925895917-afdab827c52f", "photo-1551288049-bbbda536339a", "photo-1518186285589-2f7649de83e0"]
     import random
+    import string
     cover_image = f"https://images.unsplash.com/{random.choice(img_ids)}?q=80&w=1200&auto=format&fit=crop"
     
-    today = datetime.datetime.now().strftime("%Y-%m-%d")
-    timestamp = datetime.datetime.now().strftime("%H%M%S")
+    # Robust slug generation using KST (UTC+9) for Korea-aligned dating
+    kst_now = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=9)))
+    today = kst_now.strftime("%Y-%m-%d")
+    timestamp = kst_now.strftime("%H%M%S")
     random_str = ''.join(random.choices(string.ascii_lowercase + string.digits, k=4))
     filepath = os.path.join(POSTS_DIR, f"{today}-{category}-{timestamp}-{random_str}.md")
     
+    print(f"Saving post to {filepath}...")
     with open(filepath, "w", encoding="utf-8") as f:
         f.write("---\n")
         f.write(f"title: \"{title}\"\n")

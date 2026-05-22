@@ -23,6 +23,11 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: Check Current Time (KST)
+        run: |
+          echo "Current Time (UTC): $(date)"
+          echo "Current Time (KST): $(TZ='Asia/Seoul' date)"
+
       - name: Install dependencies
         run: |
           python3 -m pip install --upgrade pip
